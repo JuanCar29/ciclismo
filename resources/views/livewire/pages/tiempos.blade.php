@@ -126,8 +126,8 @@
 
             <flux:table>
                 <flux:table.columns class="bg-zinc-100">
-                    <flux:table.column align="center">Pos.</flux:table.column>
-                    <flux:table.column align="center">Dorsal</flux:table.column>
+                    <flux:table.column align="center" class="w-20">Pos.</flux:table.column>
+                    <flux:table.column align="center" class="w-20">Dorsal</flux:table.column>
                     <flux:table.column align="center">Apellidos</flux:table.column>
                     <flux:table.column align="center">Nombre</flux:table.column>
                     <flux:table.column align="center">Tiempo</flux:table.column>
@@ -145,10 +145,10 @@
                                 ->first();
                         @endphp
                         <flux:table.row :key="$tiempo->id">
-                            <flux:table.cell class="tabular-nums text-zinc-400 w-10">
+                            <flux:table.cell class="tabular-nums text-zinc-400 w-20">
                                 {{ $index + 1 }}
                             </flux:table.cell>
-                            <flux:table.cell class="tabular-nums font-medium w-16">
+                            <flux:table.cell class="tabular-nums font-medium w-20">
                                 {{ $participante?->dorsal ?? '—' }}
                             </flux:table.cell>
                             <flux:table.cell class="font-medium">

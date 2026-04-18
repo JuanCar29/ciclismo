@@ -34,6 +34,10 @@
                         :current="request()->routeIs('public.ciclistas.*')">
                         Ciclistas
                     </flux:navbar.item>
+                    <flux:navbar.item href="{{ route('public.equipos.index') }}"
+                        :current="request()->routeIs('public.equipos.*')">
+                        Equipos
+                    </flux:navbar.item>
                     <flux:navbar.item href="{{ route('login') }}" :current="request()->routeIs('login')">
                         Admin
                     </flux:navbar.item>

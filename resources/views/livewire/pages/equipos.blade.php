@@ -19,24 +19,24 @@
     {{-- Tabla --}}
     <flux:table :paginate="$equipos">
         <flux:table.columns class="bg-zinc-100">
-            <flux:table.column>Nombre</flux:table.column>
-            <flux:table.column>Abreviatura</flux:table.column>
-            <flux:table.column>País</flux:table.column>
-            <flux:table.column>Web</flux:table.column>
-            <flux:table.column>Ciclistas</flux:table.column>
-            <flux:table.column></flux:table.column>
+            <flux:table.column align="center">Nombre</flux:table.column>
+            <flux:table.column align="center">Abreviatura</flux:table.column>
+            <flux:table.column align="center">País</flux:table.column>
+            <flux:table.column align="center">Web</flux:table.column>
+            <flux:table.column align="center">Ciclistas</flux:table.column>
+            <flux:table.column align="center"></flux:table.column>
         </flux:table.columns>
         <flux:table.rows>
             @forelse ($equipos as $equipo)
                 <flux:table.row :key="$equipo->id">
-                    <flux:table.cell class="font-medium">{{ $equipo->nombre }}</flux:table.cell>
+                    <flux:table.cell>{{ $equipo->nombre }}</flux:table.cell>
                     <flux:table.cell>{{ $equipo->abreviatura ?? '—' }}</flux:table.cell>
                     <flux:table.cell>{{ $equipo->pais ?? '—' }}</flux:table.cell>
                     <flux:table.cell>
                         @if ($equipo->web)
-                            <a href="{{ $equipo->web }}" target="_blank" class="text-blue-600 hover:underline text-sm">
+                            <flux:link href="{{ $equipo->web }}" variant="subtle" target="_blank">
                                 {{ parse_url($equipo->web, PHP_URL_HOST) }}
-                            </a>
+                            </flux:link>
                         @else
                             —
                         @endif

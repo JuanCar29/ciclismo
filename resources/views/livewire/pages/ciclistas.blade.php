@@ -20,7 +20,6 @@
     {{-- Tabla --}}
     <flux:table :paginate="$ciclistas">
         <flux:table.columns class="bg-zinc-100">
-            <flux:table.column align="center">Apellidos</flux:table.column>
             <flux:table.column align="center">Nombre</flux:table.column>
             <flux:table.column align="center">Equipo</flux:table.column>
             <flux:table.column align="center">Nacionalidad</flux:table.column>
@@ -30,8 +29,7 @@
         <flux:table.rows>
             @forelse ($ciclistas as $ciclista)
                 <flux:table.row :key="$ciclista->id">
-                    <flux:table.cell class="font-medium">{{ $ciclista->apellidos }}</flux:table.cell>
-                    <flux:table.cell>{{ $ciclista->nombre }}</flux:table.cell>
+                    <flux:table.cell>{{ $ciclista->apellidos }}, {{ $ciclista->nombre }}</flux:table.cell>
                     <flux:table.cell>
                         @if ($ciclista->equipo)
                             <flux:badge variant="outline">{{ $ciclista->equipo->abreviatura ?? $ciclista->equipo->nombre }}</flux:badge>
@@ -51,7 +49,7 @@
                 </flux:table.row>
             @empty
                 <flux:table.row>
-                    <flux:table.cell colspan="6" class="text-center text-zinc-400 py-8">
+                    <flux:table.cell colspan="5" class="text-center text-zinc-400 py-8">
                         No se encontraron ciclistas.
                     </flux:table.cell>
                 </flux:table.row>

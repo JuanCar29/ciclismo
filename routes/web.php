@@ -49,6 +49,13 @@ Route::prefix('resultados')->name('public.')->group(function () {
 
     Route::get('/ciclistas/{ciclista}', [CiclistaPublicaController::class, 'show'])
         ->name('ciclistas.show');
+
+    // Equipos
+    Route::get('/equipos', [\App\Http\Controllers\Public\EquipoPublicaController::class, 'index'])
+        ->name('equipos.index');
+
+    Route::get('/equipos/{equipo}', [\App\Http\Controllers\Public\EquipoPublicaController::class, 'show'])
+        ->name('equipos.show');
 });
 
 require __DIR__.'/settings.php';

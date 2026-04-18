@@ -23,7 +23,7 @@
     {{-- Tabla --}}
     <flux:table>
         <flux:table.columns class="bg-zinc-100">
-            <flux:table.column align="center">Dorsal</flux:table.column>
+            <flux:table.column align="center" class="w-20">Dorsal</flux:table.column>
             <flux:table.column align="center">Apellidos</flux:table.column>
             <flux:table.column align="center">Nombre</flux:table.column>
             <flux:table.column align="center">Equipo</flux:table.column>
@@ -34,7 +34,7 @@
         <flux:table.rows>
             @forelse ($participantes as $p)
                 <flux:table.row :key="$p->id">
-                    <flux:table.cell class="font-medium tabular-nums w-16">
+                    <flux:table.cell class="font-medium tabular-nums w-20">
                         {{ $p->dorsal }}
                     </flux:table.cell>
                     <flux:table.cell class="font-medium">
