@@ -4,22 +4,24 @@
 
 @section('content')
 
-    <div class="mb-8">
-        <flux:heading size="xl" accent>Equipos</flux:heading>
-        <flux:text size="base">Listado de escuadras registradas.</flux:text>
-    </div>
+    <flux:card class="mb-6">
+        <x-public.titulos>
+            <x-slot:titulo>Equipos</x-slot:titulo>
+            <x-slot:subtitulo>Listado de escuadras registradas.</x-slot:subtitulo>
+        </x-public.titulos>
+    </flux:card>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         @forelse($equipos as $equipo)
             <flux:card class="hover:shadow-md transition-shadow">
                 <div class="flex items-center gap-4 mb-4">
-                    <flux:avatar circle size="lg" color="zinc"
-                        name="{{ mb_substr(strtoupper($equipo->nombre), 0, 1) }}{{ mb_substr(strtoupper($equipo->abreviatura), 0, 1) }}" />
+                    <flux:avatar circle size="lg" color="zinc">
+                        {{ $equipo->abreviatura }}
+                    </flux:avatar>
                     <div>
                         <flux:link href="{{ route('public.equipos.show', $equipo) }}" class="text-lg font-bold">
                             {{ $equipo->nombre }}
                         </flux:link>
-                        <flux:text size="sm">{{ $equipo->abreviatura }}</flux:text>
                     </div>
                 </div>
 

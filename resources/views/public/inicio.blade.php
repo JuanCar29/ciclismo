@@ -5,10 +5,9 @@
 @section('content')
 
     {{-- Hero --}}
-    <div class="mb-10">
-        <flux:heading size="xl" accent class="mb-4">Resultados Ciclismo</flux:heading>
-        <flux:text size="base">Clasificaciones y resultados de pruebas ciclistas.</flux:text>
-    </div>
+    <flux:card class="mb-6">
+        <x-public.titulos titulo="Resultados Ciclismo" subtitulo="Clasificaciones y resultados de pruebas ciclistas." />
+    </flux:card>
 
     {{-- En curso --}}
     @if ($enCurso->isNotEmpty())

@@ -13,16 +13,8 @@
     </flux:breadcrumbs>
 
     {{-- Cabecera --}}
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-        <div>
-            <flux:heading size="xl" level="1" accent>Clasificación por equipos</flux:heading>
-            <flux:subheading class="flex items-center gap-2">
-                {{ $prueba->nombre }}
-                @if ($prueba->edicion) ({{ $prueba->edicion }}) @endif
-                <flux:separator vertical />
-                Suma de los 3 mejores tiempos por equipo
-            </flux:subheading>
-        </div>
+    <flux:card class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <x-public.titulos titulo="Clasificación por equipos" :subtitulo="$prueba->nombre . ($prueba->edicion ? ' (' . $prueba->edicion . ')' : '')" />
 
         {{-- Navegación clasificaciones --}}
         <div class="flex items-center gap-2">
@@ -30,7 +22,7 @@
             <flux:button :href="route('public.clasificacion.puntos', $prueba)" size="sm">Puntos</flux:button>
             <flux:button variant="primary" size="sm" color="amber">Equipos</flux:button>
         </div>
-    </div>
+    </flux:card>
 
     {{-- Tabla --}}
     @if ($clasificacion->isNotEmpty())

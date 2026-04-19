@@ -4,10 +4,12 @@
 
 @section('content')
 
-    <div class="mb-8">
-        <h1 class="text-3xl font-bold text-zinc-900 dark:text-zinc-100">Pruebas</h1>
-        <p class="mt-2 text-zinc-500 dark:text-zinc-400">Todas las carreras y pruebas ciclistas.</p>
-    </div>
+    <flux:card class="mb-6">
+        <x-public.titulos> 
+            <x-slot:titulo>Pruebas</x-slot:titulo>
+            <x-slot:subtitulo>Todas las carreras y pruebas ciclistas.</x-slot:subtitulo>
+        </x-public.titulos>
+    </flux:card>
 
     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         @forelse ($pruebas as $prueba)

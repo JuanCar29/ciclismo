@@ -4,11 +4,11 @@
 
 @section('content')
 
-    <div class="mb-8 flex justify-between items-center">
-        <div>
-            <flux:heading size="xl" accent>Ciclistas</flux:heading>
-            <flux:text size="base">Registro de ciclistas en activo.</flux:text>
-        </div>
+    <flux:card class="mb-6 flex justify-between items-center">
+        <x-public.titulos> 
+            <x-slot:titulo>Ciclistas</x-slot:titulo>
+            <x-slot:subtitulo>Registro de ciclistas en activo.</x-slot:subtitulo>
+        </x-public.titulos>
         <form method="GET" action="{{ url()->current() }}" class="flex items-end gap-3">
             <flux:select name="equipo_id" label="Filtrar por equipo" :value="request('equipo_id')"
                 onchange="this.form.submit()">
@@ -24,7 +24,7 @@
                 <flux:button href="{{ url()->current() }}" variant="filled">Limpiar</flux:button>
             @endif
         </form>
-    </div>
+    </flux:card>
 
     <flux:card class="p-4">
         <flux:table>

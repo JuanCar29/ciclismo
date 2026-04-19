@@ -12,39 +12,37 @@
     </flux:breadcrumbs>
 
     {{-- Perfil del Equipo --}}
-    <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-6 mb-8">
-        <div class="flex flex-col sm:flex-row sm:items-center gap-6">
+    <flux:card class="mb-6 flex flex-col sm:flex-row sm:items-center gap-6">
+        <flux:avatar circle size="xl" color="zinc">
+            {{ $equipo->abreviatura }}
+        </flux:avatar>
 
-            <flux:avatar circle size="xl" color="zinc"
-                name="{{ mb_substr(strtoupper($equipo->nombre), 0, 1) }}{{ mb_substr(strtoupper($equipo->abreviatura), 0, 1) }}" />
-
-            <div class="flex-1">
-                <flux:heading size="xl" accent>
-                    {{ $equipo->nombre }} ({{ $equipo->abreviatura }})
-                </flux:heading>
-                <div class="flex flex-wrap items-center gap-3 mt-2">
-                    @if ($equipo->pais)
-                        <flux:text class="text-base">{{ $equipo->pais }}</flux:text>
-                        <flux:separator vertical />
-                    @endif
-                    @if ($equipo->web)
-                        <flux:link href="{{ $equipo->web }}" target="_blank" icon="globe-alt">{{ $equipo->web }}</flux:link>
-                    @endif
-                </div>
-            </div>
-
-            <div class="flex gap-6 text-center shrink-0">
-                <div>
-                    <flux:heading size="xl" accent>{{ $ciclistas->count() }}</flux:heading>
-                    <flux:text size="xs">Ciclistas</flux:text>
-                </div>
-                <div>
-                    <flux:heading size="xl" accent>{{ $participaciones->count() }}</flux:heading>
-                    <flux:text size="xs">Pruebas</flux:text>
-                </div>
+        <div class="flex-1">
+            <flux:heading size="xl" accent>
+                {{ $equipo->nombre }} ({{ $equipo->abreviatura }})
+            </flux:heading>
+            <div class="flex flex-wrap items-center gap-3 mt-2">
+                @if ($equipo->pais)
+                    <flux:text class="text-base">{{ $equipo->pais }}</flux:text>
+                @endif
+                @if ($equipo->web)
+                    <flux:separator vertical />
+                    <flux:link href="{{ $equipo->web }}" target="_blank" icon="globe-alt">{{ $equipo->web }}</flux:link>
+                @endif
             </div>
         </div>
-    </div>
+
+        <div class="flex gap-6 text-center shrink-0">
+            <div>
+                <flux:heading size="xl" accent>{{ $ciclistas->count() }}</flux:heading>
+                <flux:text size="xs">Ciclistas</flux:text>
+            </div>
+            <div>
+                <flux:heading size="xl" accent>{{ $participaciones->count() }}</flux:heading>
+                <flux:text size="xs">Pruebas</flux:text>
+            </div>
+        </div>
+    </flux:card>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {{-- Plantilla Actual --}}
@@ -55,8 +53,9 @@
                     @forelse($ciclistas as $ciclista)
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-3">
-                                <flux:avatar circle size="sm" color="indigo"
-                                    name="{{ mb_substr(strtoupper($ciclista->nombre), 0, 1) }}{{ mb_substr(strtoupper($ciclista->apellidos), 0, 1) }}" />
+                                <flux:avatar circle size="sm" color="indigo">
+                                    {{ mb_substr(strtoupper($ciclista->nombre), 0, 1) }}{{ mb_substr(strtoupper($ciclista->apellidos), 0, 1) }}
+                                </flux:avatar>
                                 <div>
                                     <flux:link href="{{ route('public.ciclistas.show', $ciclista) }}" class="font-medium text-sm">
                                         {{ $ciclista->nombre }} {{ $ciclista->apellidos }}

@@ -12,53 +12,44 @@
     </flux:breadcrumbs>
 
     {{-- Perfil --}}
-    <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-6 mb-8">
-        <div class="flex flex-col sm:flex-row sm:items-center gap-6">
+    <flux:card class="mb-8 flex flex-col sm:flex-row sm:items-end gap-6">
+        <flux:avatar circle size="xl" color="indigo">
+            {{ mb_substr(strtoupper($ciclista->nombre), 0, 1) }}{{ mb_substr(strtoupper($ciclista->apellidos), 0, 1) }}
+        </flux:avatar>
 
-            {{-- Iniciales --}}
-            <flux:avatar circle size="xl" color="indigo"
-                name="{{ mb_substr(strtoupper($ciclista->nombre), 0, 1) }}{{ mb_substr(strtoupper($ciclista->apellidos), 0, 1) }}" />
+        <div class="flex-1">
+            <x-public.titulos> 
+                <x-slot:titulo>{{ $ciclista->nombre }} {{ $ciclista->apellidos }}</x-slot:titulo>
+                <x-slot:subtitulo>
+                    <div class="flex items-center gap-2">
+                        {{ $ciclista->equipo->nombre }}
+                        <flux:separator variant="subtle" vertical />
+                        {{ $ciclista->nacionalidad }}
+                        <flux:separator variant="subtle" vertical />
+                        {{ $ciclista->fecha_nacimiento_formateada }}
+                        <flux:separator variant="subtle" vertical />
+                        {{ $ciclista->edad }}
+                    </div>
+                </x-slot:subtitulo>
+            </x-public.titulos>
+        </div>
 
-            {{-- Datos --}}
-            <div class="flex-1">
-                <flux:heading size="xl" accent>
-                    {{ $ciclista->nombre }} {{ $ciclista->apellidos }}
-                </flux:heading>
-                <div class="flex flex-wrap items-center gap-3 mt-2">
-                    @if ($ciclista->equipo)
-                        <flux:text class="text-base">{{ $ciclista->equipo->nombre }}</flux:text>
-                        <flux:separator vertical />
-                    @endif
-                    @if ($ciclista->nacionalidad)
-                        <flux:text>{{ $ciclista->nacionalidad }}</flux:text>
-                        <flux:separator vertical />
-                    @endif
-                    @if ($ciclista->fecha_nacimiento)
-                        <flux:text>{{ $ciclista->fecha_nacimiento_formateada }}</flux:text>
-                        <flux:separator vertical />
-                        <flux:text>{{ $ciclista->edad }}</flux:text>
-                    @endif
-                </div>
+        <div class="flex gap-6 text-center shrink-0">
+            <div>
+                <flux:heading size="xl" accent>{{ $participaciones->count() }}</flux:heading>
+                <flux:text size="xs">Pruebas</flux:text>
             </div>
-
-            {{-- Stats rápidas --}}
-            <div class="flex gap-6 text-center shrink-0">
-                <div>
-                    <flux:heading size="xl" accent>{{ $participaciones->count() }}</flux:heading>
-                    <flux:text size="xs">Pruebas</flux:text>
-                </div>
-                <div>
-                    <flux:heading size="xl" accent>{{ $participaciones->sum('etapas') }}</flux:heading>
-                    <flux:text size="xs">Etapas</flux:text>
-                </div>
-                <div>
-                    <flux:heading size="xl" accent>{{ $participaciones->whereNotNull('abandono')->count() }}
-                    </flux:heading>
-                    <flux:text size="xs">Abandonos</flux:text>
-                </div>
+            <div>
+                <flux:heading size="xl" accent>{{ $participaciones->sum('etapas') }}</flux:heading>
+                <flux:text size="xs">Etapas</flux:text>
+            </div>
+            <div>
+                <flux:heading size="xl" accent>{{ $participaciones->whereNotNull('abandono')->count() }}
+                </flux:heading>
+                <flux:text size="xs">Abandonos</flux:text>
             </div>
         </div>
-    </div>
+    </flux:card>
 
     {{-- Historial de participaciones --}}
     <flux:heading size="xl" accent class="mb-4">Historial de participaciones</flux:heading>

@@ -12,7 +12,7 @@
     </flux:breadcrumbs>
 
     {{-- Cabecera --}}
-    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
+    <flux:card class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
         <div>
             <div class="flex items-center gap-2 mb-1">
                 <flux:badge color="indigo">{{ $prueba->tipo === 'etapas' ? 'Por etapas' : 'Clásica' }}</flux:badge>
@@ -20,22 +20,20 @@
                     <flux:text>{{ $prueba->pais }}</flux:text>
                 @endif
             </div>
-            <div class="flex items-end gap-2">
-                <flux:heading size="xl" accent>{{ $prueba->nombre }}</flux:heading>
-                @if ($prueba->edicion)
-                    <flux:text>({{ $prueba->edicion }})</flux:text>
-                @endif
-            </div>
-            <div class="flex items-center gap-1 mt-1">
-                <flux:text>{{ $prueba->fecha_inicio->translatedFormat('d F Y') }}</flux:text>
-                @if ($prueba->fecha_inicio != $prueba->fecha_fin)
-                    — <flux:text>{{ $prueba->fecha_fin->translatedFormat('d F Y') }}</flux:text>
-                @endif
-            </div>
+            <x-public.titulos> 
+                <x-slot:titulo>{{ $prueba->nombre }} {{ $prueba->edicion }}</x-slot:titulo>
+                <x-slot:subtitulo>
+                    <div class="flex items-center gap-2">
+                        {{ $prueba->fecha_inicio->translatedFormat('d F Y') }} - {{ $prueba->fecha_fin->translatedFormat('d F Y') }}
+                        <flux:separator variant="subtle" vertical />
+                        {{ $etapas->count() }} etapa{{ $etapas->count() !== 1 ? 's' : '' }}
+                    </div>
+                </x-slot:subtitulo>
+            </x-public.titulos>
         </div>
 
         {{-- Stats --}}
-        <div class="flex gap-6 text-center shrink-0">
+        <div class="flex items-end gap-6 text-center shrink-0">
             <div>
                 <flux:heading size="xl" accent>{{ $etapas->count() }}</flux:heading>
                 <flux:text size="xs">Etapas</flux:text>
@@ -49,7 +47,7 @@
                 <flux:text size="xs">Abandonos</flux:text>
             </div>
         </div>
-    </div>
+    </flux:card>
 
     {{-- Accesos a clasificaciones --}}
     <div class="grid sm:grid-cols-4 gap-3 mb-10">

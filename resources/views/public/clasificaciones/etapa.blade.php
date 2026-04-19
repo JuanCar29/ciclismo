@@ -13,27 +13,24 @@
     </flux:breadcrumbs>
 
     {{-- Cabecera --}}
-    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
-        <div>
-            <flux:heading size="xl" level="1" accent>
-                Etapa {{ $etapa->numero }}
-                @if ($etapa->nombre)
-                    — {{ $etapa->nombre }}
-                @endif
-            </flux:heading>
-            <flux:subheading class="flex items-center gap-2">
-                {{ $prueba->nombre }}
-                <flux:separator vertical />
-                {{ $etapa->fecha->translatedFormat('d F Y') }}
-                @if ($etapa->distancia_km)
-                    <flux:separator vertical />
+    <flux:card class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
+        <x-public.titulos> 
+            <x-slot:titulo>Etapa {{ $etapa->numero }} {{ $etapa->nombre }}</x-slot:titulo>
+            <x-slot:subtitulo>
+                <div class="flex items-center gap-2">
+                    {{ $prueba->nombre }}
+                    <flux:separator variant="subtle" vertical />
+                    {{ $etapa->fecha->translatedFormat('d F Y') }}
+                    <flux:separator variant="subtle" vertical />
                     {{ number_format($etapa->distancia_km, 1, ',', '.') }} km
-                @endif
-            </flux:subheading>
-        </div>
+                    <flux:separator variant="subtle" vertical />
+                    {{ $etapa->velocidad_media_ganador }}
+                </div>
+            </x-slot:subtitulo> 
+        </x-public.titulos>
 
         {{-- Navegación entre etapas --}}
-        <div class="flex items-center gap-1 shrink-0 flex-wrap">
+        <div class="flex items-center gap-2 shrink-0 flex-wrap">
             @foreach ($etapas as $e)
                 <flux:button
                     :href="route('public.clasificacion.etapa', [$prueba, $e])"
@@ -45,7 +42,7 @@
                 </flux:button>
             @endforeach
         </div>
-    </div>
+    </flux:card>
 
     {{-- Tabla --}}
     @if ($clasificacion->isNotEmpty())

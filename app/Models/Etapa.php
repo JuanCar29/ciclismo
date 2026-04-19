@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -26,5 +27,25 @@ class Etapa extends Model
     public function tiempos(): HasMany
     {
         return $this->hasMany(Tiempo::class);
+    }
+
+    /**
+     * Calcula la velocidad media del ganador de la etapa.
+     */
+    protected function velocidadMediaGanador(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $mejorTiempo = $this->tiempos()->orderBy('segundos')->first();
+
+                if (!$mejorTiempo || $this->distancia_km <= 0 || $mejorTiempo->segundos <= 0) {
+                    return null;
+                }
+
+                $velocidad = $this->distancia_km / ($mejorTiempo->segundos / 3600);
+
+                return number_format($velocidad, 2, ',', '.') . ' km/h';
+            },
+        );
     }
 }

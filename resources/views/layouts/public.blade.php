@@ -12,14 +12,14 @@
 <body class="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100">
 
     {{-- Navegación --}}
-    <nav class="bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 sticky top-0 z-50">
+    <header class="bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
 
                 {{-- Logo --}}
-                <a href="{{ route('public.inicio') }}" class="flex items-center gap-2">
-                    <flux:icon.clock />
-                    <flux:heading size="xl" accent>
+                <a href="{{ route('public.inicio') }}" class="flex items-center gap-4">
+                    <flux:icon.clock class="size-12" />
+                    <flux:heading size="2xl" accent>
                         Resultados Ciclismo
                     </flux:heading>
                 </a>
@@ -44,7 +44,7 @@
                 </flux:navbar>
             </div>
         </div>
-    </nav>
+    </header>
 
     {{-- Contenido --}}
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
