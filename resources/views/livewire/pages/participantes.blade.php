@@ -15,7 +15,7 @@
             icon="magnifying-glass"
             class="max-w-sm"
         />
-        <flux:button wire:click="create" variant="primary" icon="plus">
+        <flux:button wire:click="create" variant="primary" icon="plus" class="cursor-pointer">
             Inscribir ciclista
         </flux:button>
     </div>
@@ -24,8 +24,7 @@
     <flux:table>
         <flux:table.columns class="bg-zinc-100">
             <flux:table.column align="center" class="w-20">Dorsal</flux:table.column>
-            <flux:table.column align="center">Apellidos</flux:table.column>
-            <flux:table.column align="center">Nombre</flux:table.column>
+            <flux:table.column align="center">Ciclista</flux:table.column>
             <flux:table.column align="center">Equipo</flux:table.column>
             <flux:table.column align="center">Nacionalidad</flux:table.column>
             <flux:table.column align="center">Abandono</flux:table.column>
@@ -34,28 +33,25 @@
         <flux:table.rows>
             @forelse ($participantes as $p)
                 <flux:table.row :key="$p->id">
-                    <flux:table.cell class="font-medium tabular-nums w-20">
+                    <flux:table.cell align="center" class="font-medium tabular-nums w-20">
                         {{ $p->dorsal }}
                     </flux:table.cell>
                     <flux:table.cell class="font-medium">
-                        {{ $p->ciclista->apellidos }}
+                        {{ $p->ciclista->apellidos }}, {{ $p->ciclista->nombre }}
                     </flux:table.cell>
-                    <flux:table.cell>
-                        {{ $p->ciclista->nombre }}
-                    </flux:table.cell>
-                    <flux:table.cell>
+                    <flux:table.cell align="center">
                         @if ($p->equipo)
-                            <flux:badge variant="outline">
-                                {{ $p->equipo->abreviatura ?? $p->equipo->nombre }}
+                            <flux:badge>
+                                {{ $p->equipo->nombre }}
                             </flux:badge>
                         @else
                             <span class="text-zinc-400">—</span>
                         @endif
                     </flux:table.cell>
-                    <flux:table.cell>
+                    <flux:table.cell align="center">
                         {{ $p->ciclista->nacionalidad ?? '—' }}
                     </flux:table.cell>
-                    <flux:table.cell>
+                    <flux:table.cell align="center">
                         @if ($p->abandono)
                             <flux:badge color="red" variant="outline">
                                 Etapa {{ $p->abandono }}
@@ -64,15 +60,15 @@
                             <flux:badge color="green" variant="outline">En carrera</flux:badge>
                         @endif
                     </flux:table.cell>
-                    <flux:table.cell>
-                        <flux:button wire:click="edit({{ $p->id }})" variant="ghost" size="sm" icon="pencil-square">
+                    <flux:table.cell align="center">
+                        <flux:button wire:click="edit({{ $p->id }})" variant="filled" size="xs" icon="pencil-square" class="cursor-pointer">
                             Editar
                         </flux:button>
                     </flux:table.cell>
                 </flux:table.row>
             @empty
                 <flux:table.row>
-                    <flux:table.cell colspan="7" class="text-center text-zinc-400 py-8">
+                    <flux:table.cell colspan="6" class="text-center text-zinc-400 py-8">
                         No hay ciclistas inscritos en esta prueba.
                     </flux:table.cell>
                 </flux:table.row>
@@ -97,14 +93,25 @@
 
         <div class="space-y-4 mt-4">
 
+            <flux:select
+                wire:model.live="equipo_id"
+                label="Equipo en esta prueba"
+            >
+                <flux:select.option value="">Selecciona un equipo...</flux:select.option>
+                @foreach ($this->equipos as $equipo)
+                    <flux:select.option value="{{ $equipo['value'] }}">
+                        {{ $equipo['label'] }}
+                    </flux:select.option>
+                @endforeach
+            </flux:select>
+
             {{-- Ciclista: solo en creación --}}
             @if (! $editingId)
                 <flux:select
-                    wire:model.live="ciclista_id"
+                    wire:model="ciclista_id"
                     label="Ciclista"
-                    placeholder="Selecciona un ciclista..."
-                    required
                 >
+                    <flux:select.option value="">Selecciona un ciclista...</flux:select.option>
                     @foreach ($this->ciclistas as $ciclista)
                         <flux:select.option value="{{ $ciclista['value'] }}">
                             {{ $ciclista['label'] }}
@@ -113,26 +120,12 @@
                 </flux:select>
             @endif
 
-            <flux:select
-                wire:model="equipo_id"
-                label="Equipo en esta prueba"
-                placeholder="Selecciona un equipo..."
-                required
-            >
-                @foreach ($this->equipos as $equipo)
-                    <flux:select.option value="{{ $equipo['value'] }}">
-                        {{ $equipo['label'] }}
-                    </flux:select.option>
-                @endforeach
-            </flux:select>
-
             <flux:input
                 wire:model="dorsal"
                 label="Dorsal"
                 type="number"
                 min="1"
                 max="999"
-                required
             />
 
             {{-- Abandono: solo en edición --}}
@@ -150,14 +143,11 @@
         </div>
 
         <div class="flex justify-end gap-3 mt-6">
-            <flux:button wire:click="closeModal" variant="ghost">
+            <flux:button wire:click="closeModal" variant="ghost" class="cursor-pointer">
                 Cancelar
             </flux:button>
-            <flux:button wire:click="save" variant="primary" wire:loading.attr="disabled">
-                <span wire:loading.remove wire:target="save">
-                    {{ $editingId ? 'Actualizar' : 'Inscribir' }}
-                </span>
-                <span wire:loading wire:target="save">Guardando...</span>
+            <flux:button wire:click="save" variant="primary" class="cursor-pointer">
+                {{ $editingId ? 'Actualizar' : 'Inscribir' }}
             </flux:button>
         </div>
     </flux:modal>

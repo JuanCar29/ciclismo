@@ -24,9 +24,13 @@
                 <x-slot:titulo>{{ $prueba->nombre }} {{ $prueba->edicion }}</x-slot:titulo>
                 <x-slot:subtitulo>
                     <div class="flex items-center gap-2">
-                        {{ $prueba->fecha_inicio->translatedFormat('d F Y') }} - {{ $prueba->fecha_fin->translatedFormat('d F Y') }}
-                        <flux:separator variant="subtle" vertical />
-                        {{ $etapas->count() }} etapa{{ $etapas->count() !== 1 ? 's' : '' }}
+                        @if ($etapas->count() > 1)
+                            {{ $prueba->fecha_inicio->translatedFormat('d F Y') }} - {{ $prueba->fecha_fin->translatedFormat('d F Y') }}
+                            <flux:separator variant="subtle" vertical />
+                            {{ $etapas->count() }} etapas
+                        @else
+                            {{ $etapas->first()->fecha->translatedFormat('d F Y') }}
+                        @endif
                     </div>
                 </x-slot:subtitulo>
             </x-public.titulos>
@@ -34,10 +38,12 @@
 
         {{-- Stats --}}
         <div class="flex items-end gap-6 text-center shrink-0">
-            <div>
-                <flux:heading size="xl" accent>{{ $etapas->count() }}</flux:heading>
-                <flux:text size="xs">Etapas</flux:text>
-            </div>
+            @if ($etapas->count() > 1)
+                <div>
+                    <flux:heading size="xl" accent>{{ $etapas->count() }}</flux:heading>
+                    <flux:text size="xs">Etapas</flux:text>
+                </div>
+            @endif
             <div>
                 <flux:heading size="xl" accent>{{ $totalParticipantes }}</flux:heading>
                 <flux:text size="xs">Ciclistas</flux:text>

@@ -49,22 +49,12 @@ class Participantes extends Component
         // No hay paginación pero limpiamos por si acaso
     }
 
-    // Al seleccionar ciclista, prerellenar equipo actual
-    public function updatedCiclistaId(?int $value): void
-    {
-        if ($value) {
-            $ciclista = Ciclista::find($value);
-            if ($ciclista?->equipo_id) {
-                $this->equipo_id = $ciclista->equipo_id;
-            }
-        }
-    }
-
     // ── Computed ─────────────────────────────────────────────────────
-    #[Computed(cache: true)]
+    #[Computed]
     public function ciclistas(): array
     {
         return Ciclista::where('activo', true)
+            ->where('equipo_id', $this->equipo_id)
             ->orderBy('apellidos')
             ->orderBy('nombre')
             ->get(['id', 'nombre', 'apellidos'])
@@ -75,12 +65,12 @@ class Participantes extends Component
             ->toArray();
     }
 
-    #[Computed(cache: true)]
+    #[Computed]
     public function equipos(): array
     {
         return Equipo::orderBy('nombre')
-            ->get(['id', 'nombre'])
-            ->map(fn ($e) => ['value' => $e->id, 'label' => $e->nombre])
+            ->get(['id', 'nombre', 'abreviatura'])
+            ->map(fn ($e) => ['value' => $e->id, 'label' => $e->nombre . ' (' . $e->abreviatura . ')'])
             ->toArray();
     }
 

@@ -15,7 +15,13 @@
     {{-- Cabecera --}}
     <flux:card class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
         <x-public.titulos> 
-            <x-slot:titulo>Etapa {{ $etapa->numero }} {{ $etapa->nombre }}</x-slot:titulo>
+            <x-slot:titulo>
+                @if ($prueba->tipo === 'etapas')
+                    Etapa {{ $etapa->numero }} {{ $etapa->nombre }}
+                @else
+                    Clásica {{ $prueba->nombre }} {{ $prueba->edicion }}
+                @endif
+            </x-slot:titulo>
             <x-slot:subtitulo>
                 <div class="flex items-center gap-2">
                     {{ $prueba->nombre }}
@@ -30,18 +36,20 @@
         </x-public.titulos>
 
         {{-- Navegación entre etapas --}}
-        <div class="flex items-center gap-2 shrink-0 flex-wrap">
-            @foreach ($etapas as $e)
-                <flux:button
-                    :href="route('public.clasificacion.etapa', [$prueba, $e])"
-                    size="sm"
-                    :variant="$e->id === $etapa->id ? 'primary' : 'filled'"
-                    :color="$e->id === $etapa->id ? 'indigo' : ''"
-                >
-                    {{ $e->numero }}
-                </flux:button>
-            @endforeach
-        </div>
+        @if ($etapas->count() > 1)
+            <div class="flex items-center gap-2 shrink-0 flex-wrap">
+                @foreach ($etapas as $e)
+                    <flux:button
+                        :href="route('public.clasificacion.etapa', [$prueba, $e])"
+                        size="sm"
+                        :variant="$e->id === $etapa->id ? 'primary' : 'filled'"
+                        :color="$e->id === $etapa->id ? 'indigo' : ''"
+                    >
+                        {{ $e->numero }}
+                    </flux:button>
+                @endforeach
+            </div>
+        @endif
     </flux:card>
 
     {{-- Tabla --}}
