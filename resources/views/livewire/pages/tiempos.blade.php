@@ -124,12 +124,11 @@
                 </flux:heading>
             </div>
 
-            <flux:table>
-                <flux:table.columns class="bg-zinc-100">
+            <flux:table container:class="max-h-200">
+                <flux:table.columns class="bg-zinc-100" sticky>
                     <flux:table.column align="center" class="w-20">Pos.</flux:table.column>
                     <flux:table.column align="center" class="w-20">Dorsal</flux:table.column>
-                    <flux:table.column align="center">Apellidos</flux:table.column>
-                    <flux:table.column align="center">Nombre</flux:table.column>
+                    <flux:table.column align="center">Ciclista</flux:table.column>
                     <flux:table.column align="center">Tiempo</flux:table.column>
                     <flux:table.column align="center">Bonif.</flux:table.column>
                     <flux:table.column align="center">Penal.</flux:table.column>
@@ -145,51 +144,46 @@
                                 ->first();
                         @endphp
                         <flux:table.row :key="$tiempo->id">
-                            <flux:table.cell class="tabular-nums text-zinc-400 w-20">
+                            <flux:table.cell align="center" class="tabular-nums text-zinc-400 w-20">
                                 {{ $index + 1 }}
                             </flux:table.cell>
-                            <flux:table.cell class="tabular-nums font-medium w-20">
+                            <flux:table.cell align="center" class="tabular-nums font-medium w-20">
                                 {{ $participante?->dorsal ?? '—' }}
                             </flux:table.cell>
                             <flux:table.cell class="font-medium">
-                                {{ $tiempo->ciclista->apellidos }}
+                                {{ $tiempo->ciclista->apellidos }}, {{ $tiempo->ciclista->nombre }}
                             </flux:table.cell>
-                            <flux:table.cell>
-                                {{ $tiempo->ciclista->nombre }}
-                            </flux:table.cell>
-                            <flux:table.cell class="tabular-nums font-mono">
+                            <flux:table.cell align="center" class="tabular-nums font-mono">
                                 {{ $this->formatearTiempo($tiempo->segundos) }}
                             </flux:table.cell>
-                            <flux:table.cell class="tabular-nums">
+                            <flux:table.cell align="center" class="tabular-nums">
                                 @if ($tiempo->bonificacion)
                                     <flux:badge color="green" variant="outline">-{{ $tiempo->bonificacion }}s</flux:badge>
                                 @else
                                     <span class="text-zinc-300">—</span>
                                 @endif
                             </flux:table.cell>
-                            <flux:table.cell class="tabular-nums">
+                            <flux:table.cell align="center" class="tabular-nums">
                                 @if ($tiempo->penalizacion)
                                     <flux:badge color="red" variant="outline">+{{ $tiempo->penalizacion }}s</flux:badge>
                                 @else
                                     <span class="text-zinc-300">—</span>
                                 @endif
                             </flux:table.cell>
-                            <flux:table.cell class="tabular-nums font-mono font-medium">
+                            <flux:table.cell align="center" class="tabular-nums font-mono font-medium">
                                 {{ $this->formatearTiempo($tiempo->tiempoNeto()) }}
                             </flux:table.cell>
-                            <flux:table.cell class="tabular-nums">
+                            <flux:table.cell align="center" class="tabular-nums">
                                 {{ $tiempo->puntos ?? '—' }}
                             </flux:table.cell>
-                            <flux:table.cell>
-                                <div class="flex gap-1">
-                                    <flux:button wire:click="edit({{ $tiempo->id }})" variant="ghost" size="sm" icon="pencil-square" />
-                                    <flux:button wire:click="delete({{ $tiempo->id }})" variant="ghost" size="sm" icon="trash" wire:confirm="¿Eliminar este tiempo?" />
-                                </div>
+                            <flux:table.cell class="flex justify-center gap-2">
+                                <flux:button wire:click="edit({{ $tiempo->id }})" variant="filled" size="sm" icon="pencil-square" class="cursor-pointer" />
+                                <flux:button wire:click="delete({{ $tiempo->id }})" variant="danger" size="sm" icon="trash" wire:confirm="¿Eliminar este tiempo?" class="cursor-pointer" />
                             </flux:table.cell>
                         </flux:table.row>
                     @empty
                         <flux:table.row>
-                            <flux:table.cell colspan="9" class="text-center text-zinc-400 py-8">
+                            <flux:table.cell colspan="8" class="text-center text-zinc-400 py-8">
                                 No hay tiempos registrados para esta etapa.
                             </flux:table.cell>
                         </flux:table.row>

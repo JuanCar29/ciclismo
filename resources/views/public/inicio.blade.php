@@ -27,8 +27,8 @@
     {{-- Próximas --}}
     @if ($proximas->isNotEmpty())
         <section class="mb-10">
-            <flux:heading size="lg" class="mb-4">Próximas pruebas</flux:heading>
-            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <flux:heading size="xl" level="2" accent>Próximas pruebas</flux:heading>
+            <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 @foreach ($proximas as $prueba)
                     <x-public.prueba-card :prueba="$prueba" />
                 @endforeach
@@ -39,14 +39,11 @@
     {{-- Pasadas --}}
     @if ($pasadas->isNotEmpty())
         <section>
-            <div class="flex items-center justify-between mb-4">
-                <h2 class="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Pruebas recientes</h2>
-                <a href="{{ route('public.pruebas.index') }}"
-                    class="text-sm text-blue-600 dark:text-blue-400 hover:underline">
-                    Ver todas →
-                </a>
+            <div class="flex items-center justify-between">
+                <flux:heading size="xl" level="2" accent>Pruebas recientes</flux:heading>
+                <flux:link href="{{ route('public.pruebas.index') }}" variant="ghost">Ver todas →</flux:link>
             </div>
-            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach ($pasadas as $prueba)
                     <x-public.prueba-card :prueba="$prueba" />
                 @endforeach
@@ -56,8 +53,8 @@
 
     {{-- Estado vacío --}}
     @if ($enCurso->isEmpty() && $proximas->isEmpty() && $pasadas->isEmpty())
-        <div class="text-center py-24 text-zinc-400">
-            <p class="text-lg">No hay pruebas registradas todavía.</p>
+        <div class="text-center py-24">
+            <flux:heading size="lg" level="4">No hay pruebas registradas todavía.</flux:heading>
         </div>
     @endif
 

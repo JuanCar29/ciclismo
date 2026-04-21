@@ -21,8 +21,8 @@
     </div>
 
     {{-- Tabla --}}
-    <flux:table>
-        <flux:table.columns class="bg-zinc-100">
+    <flux:table container:class="max-h-200">
+        <flux:table.columns class="bg-zinc-100" sticky>
             <flux:table.column align="center" class="w-20">Dorsal</flux:table.column>
             <flux:table.column align="center">Ciclista</flux:table.column>
             <flux:table.column align="center">Equipo</flux:table.column>
