@@ -2,10 +2,9 @@
 
 use App\Http\Controllers\Public\CiclistaPublicaController;
 use App\Http\Controllers\Public\ClasificacionController;
+use App\Http\Controllers\Public\EquipoPublicaController;
 use App\Http\Controllers\Public\PruebaPublicaController;
 use Illuminate\Support\Facades\Route;
-
-// Route::view('/', 'welcome')->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
@@ -19,43 +18,38 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 // ── Inicio ────────────────────────────────────────────────────────────
-Route::get('/', [PruebaPublicaController::class, 'inicio'])->name('public.inicio');
+Route::controller(PruebaPublicaController::class)->group(function () {
+    Route::get('/', 'inicio')->name('public.inicio');
+});
 
-// ── Pruebas ───────────────────────────────────────────────────────────
+// ── Publico ───────────────────────────────────────────────────────────
 Route::prefix('resultados')->name('public.')->group(function () {
 
-    Route::get('/pruebas', [PruebaPublicaController::class, 'index'])
-        ->name('pruebas.index');
-
-    Route::get('/pruebas/{prueba}', [PruebaPublicaController::class, 'show'])
-        ->name('pruebas.show');
+    // Pruebas
+    Route::controller(PruebaPublicaController::class)->group(function () {
+        Route::get('/pruebas', 'index')->name('pruebas.index');
+        Route::get('/pruebas/{prueba}', 'show')->name('pruebas.show');
+    });
 
     // Clasificaciones
-    Route::get('/pruebas/{prueba}/clasificacion-general', [ClasificacionController::class, 'general'])
-        ->name('clasificacion.general');
-
-    Route::get('/pruebas/{prueba}/clasificacion-puntos', [ClasificacionController::class, 'puntos'])
-        ->name('clasificacion.puntos');
-
-    Route::get('/pruebas/{prueba}/clasificacion-equipos', [ClasificacionController::class, 'equipos'])
-        ->name('clasificacion.equipos');
-
-    Route::get('/pruebas/{prueba}/etapas/{etapa}', [ClasificacionController::class, 'etapa'])
-        ->name('clasificacion.etapa');
+    Route::controller(ClasificacionController::class)->group(function () {
+        Route::get('/pruebas/{prueba}/clasificacion-general', 'general')->name('clasificacion.general');
+        Route::get('/pruebas/{prueba}/clasificacion-puntos', 'puntos')->name('clasificacion.puntos');
+        Route::get('/pruebas/{prueba}/clasificacion-equipos', 'equipos')->name('clasificacion.equipos');
+        Route::get('/pruebas/{prueba}/etapas/{etapa}', 'etapa')->name('clasificacion.etapa');
+    });
 
     // Ciclistas
-    Route::get('/ciclistas', [CiclistaPublicaController::class, 'index'])
-        ->name('ciclistas.index');
-
-    Route::get('/ciclistas/{ciclista}', [CiclistaPublicaController::class, 'show'])
-        ->name('ciclistas.show');
+    Route::controller(CiclistaPublicaController::class)->group(function () {
+        Route::get('/ciclistas', 'index')->name('ciclistas.index');
+        Route::get('/ciclistas/{ciclista}', 'show')->name('ciclistas.show');
+    });
 
     // Equipos
-    Route::get('/equipos', [\App\Http\Controllers\Public\EquipoPublicaController::class, 'index'])
-        ->name('equipos.index');
-
-    Route::get('/equipos/{equipo}', [\App\Http\Controllers\Public\EquipoPublicaController::class, 'show'])
-        ->name('equipos.show');
+    Route::controller(EquipoPublicaController::class)->group(function () {
+        Route::get('/equipos', 'index')->name('equipos.index');
+        Route::get('/equipos/{equipo}', 'show')->name('equipos.show');
+    });
 });
 
 require __DIR__.'/settings.php';

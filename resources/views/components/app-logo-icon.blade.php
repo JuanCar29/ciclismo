@@ -1,8 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 42" {{ $attributes }}>
-    <path 
-        fill="currentColor" 
-        fill-rule="evenodd" 
-        clip-rule="evenodd"
-        d="M17.2 5.633 8.6.855 0 5.633v26.51l16.2 9 16.2-9v-8.442l7.6-4.223V9.856l-8.6-4.777-8.6 4.777V18.3l-5.6 3.111V5.633ZM38 18.301l-5.6 3.11v-6.157l5.6-3.11V18.3Zm-1.06-7.856-5.54 3.078-5.54-3.079 5.54-3.078 5.54 3.079ZM24.8 18.3v-6.157l5.6 3.111v6.158L24.8 18.3Zm-1 1.732 5.54 3.078-13.14 7.302-5.54-3.078 13.14-7.3v-.002Zm-16.2 7.89 7.6 4.222V38.3L2 30.966V7.92l5.6 3.111v16.892ZM8.6 9.3 3.06 6.222 8.6 3.143l5.54 3.08L8.6 9.3Zm21.8 15.51-13.2 7.334V38.3l13.2-7.334v-6.156ZM9.6 11.034l5.6-3.11v14.6l-5.6 3.11v-14.6Z"
-    />
+<svg
+    {{ $attributes }}
+    version="1.1"
+    id="Icons"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 32 32"
+    xml:space="preserve"
+>
+    <style type="text/css">
+        .st0{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+    </style>
+    <path class="st0" d="M21.5,3c-1.9,0.1-3.7,0.8-5,2.1L15.6,6h0c1.5,0,2.9,0.7,3.8,1.9C20,8.6,20.9,9,21.9,9c1.9,0,3.4-1.6,3.1-3.5C24.7,4,23.2,2.9,21.5,3z"/>
+    <circle class="st0" cx="6" cy="24" r="5"/>
+    <circle class="st0" cx="26" cy="24" r="5"/>
+    <path class="st0" d="M26,14h-5l-3.2-3.2c-1-1-2.7-1.1-3.8-0.1l-3.5,3c-0.8,0.7-0.7,1.9,0.2,2.5L17,20l-2,6"/>
+    <line class="st0" x1="18.5" y1="11.5" x2="12.2" y2="17"/>
+    <circle cx="6" cy="24" r="1"/>
+    <circle cx="26" cy="24" r="1"/>
 </svg>

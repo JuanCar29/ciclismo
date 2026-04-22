@@ -1,6 +1,4 @@
-@extends('layouts.public')
-
-@section('title', 'Clasificación general — ' . $prueba->nombre)
+@extends('layouts.public', ['title' => 'Clasificación general — ' . $prueba->nombre])
 
 @section('content')
 

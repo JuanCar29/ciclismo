@@ -2,11 +2,7 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Resultados de pruebas ciclistas">
-    <title>@yield('title', 'Resultados Ciclismo')</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @include('partials.head')
 </head>
 
 <body class="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100">
@@ -17,8 +13,8 @@
             <div class="flex items-center justify-between h-16">
 
                 {{-- Logo --}}
-                <a href="{{ route('public.inicio') }}" class="flex items-center gap-4">
-                    <flux:icon.clock class="size-12" />
+                <a href="{{ route('public.inicio') }}" class="flex items-center gap-8">
+                    <x-app-logo-icon class="size-12 text-black dark:text-white" />
                     <flux:heading size="2xl" accent>
                         Resultados Ciclismo
                     </flux:heading>

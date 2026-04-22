@@ -1,6 +1,4 @@
-@extends('layouts.public')
-
-@section('title', 'Equipos — Resultados Ciclismo')
+@extends('layouts.public', ['title' => 'Equipos'])
 
 @section('content')
 

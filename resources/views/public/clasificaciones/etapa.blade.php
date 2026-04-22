@@ -1,6 +1,4 @@
-@extends('layouts.public')
-
-@section('title', 'Etapa ' . $etapa->numero . ' — ' . $prueba->nombre)
+@extends('layouts.public', ['title' => 'Etapa ' . $etapa->numero . ' — ' . $prueba->nombre])
 
 @section('content')
 
