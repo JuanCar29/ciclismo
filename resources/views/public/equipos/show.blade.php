@@ -55,8 +55,8 @@
                                     {{ mb_substr(strtoupper($ciclista->nombre), 0, 1) }}{{ mb_substr(strtoupper($ciclista->apellidos), 0, 1) }}
                                 </flux:avatar>
                                 <div>
-                                    <flux:link href="{{ route('public.ciclistas.show', $ciclista) }}" class="font-medium text-sm">
-                                        {{ $ciclista->nombre }} {{ $ciclista->apellidos }}
+                                    <flux:link href="{{ route('public.ciclistas.show', $ciclista) }}" variant="ghost">
+                                        {{ $ciclista->apellidos }}, {{ $ciclista->nombre }}
                                     </flux:link>
                                     <flux:text size="xs">{{ $ciclista->nacionalidad }}</flux:text>
                                 </div>
@@ -88,13 +88,13 @@
                             @foreach($participaciones as $p)
                                 <flux:table.row :key="$p['prueba']->id">
                                     <flux:table.cell>
-                                        <flux:link href="{{ route('public.pruebas.show', $p['prueba']) }}" class="font-medium">
+                                        <flux:link href="{{ route('public.pruebas.show', $p['prueba']) }}" variant="ghost" class="mb-2">
                                             {{ $p['prueba']->nombre }}
                                         </flux:link>
-                                        <div class="text-xs text-zinc-400">{{ $p['prueba']->edicion }}</div>
+                                        <flux:text size="xs">{{ $p['prueba']->edicion }}</flux:text>
                                     </flux:table.cell>
                                     <flux:table.cell align="center">
-                                        <span class="tabular-nums">{{ $p['ciclistas_count'] }}</span>
+                                        <flux:text size="xs" class="tabular-nums">{{ $p['ciclistas_count'] }}</flux:text>
                                     </flux:table.cell>
                                     <flux:table.cell align="center">
                                         <flux:badge color="{{ ($p['mejor_posicion'] ?? 10) <= 3 ? 'green' : 'zinc' }}">
@@ -105,7 +105,7 @@
                                         @if($p['abandonos'] > 0)
                                             <flux:badge color="red" size="sm">{{ $p['abandonos'] }}</flux:badge>
                                         @else
-                                            <span class="text-zinc-400">—</span>
+                                            <flux:text size="xs">—</flux:text>
                                         @endif
                                     </flux:table.cell>
                                 </flux:table.row>
@@ -135,16 +135,14 @@
                             @foreach($mejoresPorEtapa as $t)
                                 <flux:table.row :key="$t->id">
                                     <flux:table.cell>
-                                        <div class="font-medium text-zinc-900 dark:text-zinc-100">
+                                        <flux:link href="{{ route('public.clasificacion.etapa', [$t->etapa->prueba, $t->etapa]) }}" variant="ghost" class="mb-2">
                                             {{ $t->etapa->nombre ?? 'Etapa ' . $t->etapa->numero }}
-                                        </div>
-                                        <div class="text-xs text-zinc-400">
-                                            {{ $t->etapa->prueba->nombre }} ({{ $t->etapa->fecha->format('d/m/Y') }})
-                                        </div>
+                                        </flux:link>
+                                        <flux:text size="xs">{{ $t->etapa->prueba->nombre }} ({{ $t->etapa->fecha->format('d/m/Y') }})</flux:text>
                                     </flux:table.cell>
                                     <flux:table.cell>
-                                        <flux:link href="{{ route('public.ciclistas.show', $t->ciclista) }}" size="sm" class="font-medium">
-                                            {{ $t->ciclista->nombre }} {{ $t->ciclista->apellidos }}
+                                        <flux:link href="{{ route('public.ciclistas.show', $t->ciclista) }}" variant="ghost">
+                                            {{ $t->ciclista->apellidos }}, {{ $t->ciclista->nombre }}
                                         </flux:link>
                                     </flux:cell>
                                     <flux:table.cell align="center">

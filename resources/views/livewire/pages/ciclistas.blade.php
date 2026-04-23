@@ -29,19 +29,21 @@
         <flux:table.rows>
             @forelse ($ciclistas as $ciclista)
                 <flux:table.row :key="$ciclista->id">
-                    <flux:table.cell>{{ $ciclista->apellidos }}, {{ $ciclista->nombre }}</flux:table.cell>
                     <flux:table.cell>
+                        <flux:text variant="strong" class="ml-4">{{ $ciclista->apellidos }}, {{ $ciclista->nombre }}</flux:text>
+                    </flux:table.cell>
+                    <flux:table.cell align="center">
                         @if ($ciclista->equipo)
-                            <flux:badge variant="outline">{{ $ciclista->equipo->abreviatura ?? $ciclista->equipo->nombre }}</flux:badge>
+                            <flux:badge variant="outline" color="lime" size="sm">{{ $ciclista->equipo->nombre }}</flux:badge>
                         @else
                             <span class="text-zinc-400">—</span>
                         @endif
                     </flux:table.cell>
-                    <flux:table.cell>{{ $ciclista->nacionalidad ?? '—' }}</flux:table.cell>
-                    <flux:table.cell>
+                    <flux:table.cell align="center">{{ $ciclista->nacionalidad ?? '—' }}</flux:table.cell>
+                    <flux:table.cell align="center">
                         {{ $ciclista->fecha_nacimiento_formateada }}
                     </flux:table.cell>
-                    <flux:table.cell>
+                    <flux:table.cell align="center">
                         <flux:button wire:click="edit({{ $ciclista->id }})" variant="ghost" size="sm" icon="pencil-square">
                             Editar
                         </flux:button>

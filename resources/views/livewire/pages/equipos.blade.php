@@ -29,22 +29,28 @@
         <flux:table.rows>
             @forelse ($equipos as $equipo)
                 <flux:table.row :key="$equipo->id">
-                    <flux:table.cell>{{ $equipo->nombre }}</flux:table.cell>
-                    <flux:table.cell>{{ $equipo->abreviatura ?? '—' }}</flux:table.cell>
-                    <flux:table.cell>{{ $equipo->pais ?? '—' }}</flux:table.cell>
                     <flux:table.cell>
+                        <flux:text variant="strong" class="ml-4">{{ $equipo->nombre }}</flux:text>
+                    </flux:table.cell>
+                    <flux:table.cell align="center">
+                        {{ $equipo->abreviatura ?? '—' }}
+                    </flux:table.cell>
+                    <flux:table.cell align="center">
+                        {{ $equipo->pais ?? '—' }}
+                    </flux:table.cell>
+                    <flux:table.cell align="center">
                         @if ($equipo->web)
-                            <flux:link href="{{ $equipo->web }}" variant="subtle" target="_blank">
+                            <flux:link :href="$equipo->web" variant="subtle" target="_blank">
                                 {{ parse_url($equipo->web, PHP_URL_HOST) }}
                             </flux:link>
                         @else
                             —
                         @endif
                     </flux:table.cell>
-                    <flux:table.cell>
-                        <flux:badge variant="outline">{{ $equipo->ciclistas_count }}</flux:badge>
+                    <flux:table.cell align="center">
+                        <flux:badge variant="outline" color="lime" size="sm">{{ $equipo->ciclistas_count }}</flux:badge>
                     </flux:table.cell>
-                    <flux:table.cell>
+                    <flux:table.cell align="center">
                         <flux:button wire:click="edit({{ $equipo->id }})" variant="ghost" size="sm" icon="pencil-square">
                             Editar
                         </flux:button>

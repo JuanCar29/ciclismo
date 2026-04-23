@@ -45,6 +45,24 @@ class ClasificacionController extends Controller
                 ];
             });
 
+        $ciclistasConTiempo = $clasificacion
+            ->pluck('ciclista.id')
+            ->filter()
+            ->all();
+
+        $abandonadosSinTiempo = $participantes
+            ->filter(fn ($participante) => $participante->abandono !== null)
+            ->reject(fn ($participante) => in_array($participante->ciclista_id, $ciclistasConTiempo, true))
+            ->map(fn ($participante) => [
+                'ciclista' => $participante->ciclista,
+                'equipo' => $participante->equipo,
+                'dorsal' => $participante->dorsal,
+                'abandono' => $participante->abandono,
+                'etapas' => 0,
+                'total_neto' => 0,
+                'formateado' => '—',
+            ]);
+
         $activos = $clasificacion
             ->whereNull('abandono')
             ->sortBy('total_neto')
@@ -52,6 +70,7 @@ class ClasificacionController extends Controller
 
         $abandonados = $clasificacion
             ->whereNotNull('abandono')
+            ->concat($abandonadosSinTiempo)
             ->sortBy('abandono')
             ->values()
             ->map(fn ($item) => [
@@ -215,7 +234,7 @@ class ClasificacionController extends Controller
     private function obtenerParticipantes(Prueba $prueba): Collection
     {
         return CiclistaPrueba::where('prueba_id', $prueba->id)
-            ->with('equipo')
+            ->with(['equipo', 'ciclista'])
             ->get()
             ->keyBy('ciclista_id');
     }
