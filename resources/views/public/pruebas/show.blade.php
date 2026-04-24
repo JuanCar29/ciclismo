@@ -126,23 +126,7 @@
                 </div>
 
                 {{-- Tipo --}}
-                @php
-                    $colores = [
-                        'llano' => 'green',
-                        'media_montana' => 'yellow',
-                        'alta_montana' => 'red',
-                        'contrarreloj' => 'indigo',
-                        'contrarreloj_por_equipos' => 'purple',
-                    ];
-                    $etiquetas = [
-                        'llano' => 'Llano',
-                        'media_montana' => 'Media montaña',
-                        'alta_montana' => 'Alta montaña',
-                        'contrarreloj' => 'CRI',
-                        'contrarreloj_por_equipos' => 'CRE',
-                    ];
-                @endphp
-                <flux:badge color="{{ $colores[$etapa->tipo] }}" size="sm">{{ $etiquetas[$etapa->tipo] }}
+                <flux:badge color="{{ $etapa->tipo->publicBadgeColor() }}" size="sm">{{ $etapa->tipo->label() }}
                 </flux:badge>
 
                 {{-- Tiempos registrados --}}

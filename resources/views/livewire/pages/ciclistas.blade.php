@@ -10,8 +10,8 @@
             wire:model.live.debounce.300ms="search"
             placeholder="Buscar por nombre, apellidos o equipo..."
             icon="magnifying-glass"
-            class="max-w-sm"
         />
+        <x-selector wire:model.live="buscar_equipo" :equipos="$this->equipos" />
         <flux:button wire:click="create" variant="primary" icon="plus">
             Nuevo ciclista
         </flux:button>
@@ -88,8 +88,8 @@
             >
                 <flux:select.option value="">Sin equipo</flux:select.option>
                 @foreach ($this->equipos as $equipo)
-                    <flux:select.option value="{{ $equipo['value'] }}">
-                        {{ $equipo['label'] }}
+                    <flux:select.option value="{{ $equipo->id }}">
+                        {{ $equipo->nombre }}
                     </flux:select.option>
                 @endforeach
             </flux:select>

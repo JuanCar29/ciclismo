@@ -43,24 +43,8 @@
                         @endif
                     </flux:table.cell>
                     <flux:table.cell align="center">
-                        @php
-                            $colores = [
-                                'llano' => 'green',
-                                'media_montana' => 'yellow',
-                                'alta_montana' => 'red',
-                                'contrarreloj' => 'blue',
-                                'contrarreloj_por_equipos' => 'purple',
-                            ];
-                            $etiquetas = [
-                                'llano' => 'Llano',
-                                'media_montana' => 'Media montaña',
-                                'alta_montana' => 'Alta montaña',
-                                'contrarreloj' => 'CRI',
-                                'contrarreloj_por_equipos' => 'CRE',
-                            ];
-                        @endphp
-                        <flux:badge color="{{ $colores[$etapa->tipo] }}" variant="outline">
-                            {{ $etiquetas[$etapa->tipo] }}
+                        <flux:badge color="{{ $etapa->tipo->badgeColor() }}" variant="outline">
+                            {{ $etapa->tipo->label() }}
                         </flux:badge>
                     </flux:table.cell>
                     <flux:table.cell align="center">

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\TipoEtapa;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +17,7 @@ class Etapa extends Model
         return [
             'fecha'         => 'date',
             'distancia_km'  => 'decimal:2',
+            'tipo'          => TipoEtapa::class,
         ];
     }
 

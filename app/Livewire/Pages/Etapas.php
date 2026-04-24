@@ -3,10 +3,12 @@
 namespace App\Livewire\Pages;
 
 use App\Actions\CerrarClasificacionEtapaAction;
+use App\Enums\TipoEtapa;
 use App\Models\Etapa;
 use App\Models\Prueba;
 use Carbon\Carbon;
 use Flux\Flux;
+use Illuminate\Validation\Rule;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Validate;
@@ -44,26 +46,28 @@ class Etapas extends Component
     #[Validate('nullable|numeric|min:0|max:999.99')]
     public ?float $distancia_km = null;
 
-    #[Validate('required|in:llano,media_montana,alta_montana,contrarreloj,contrarreloj_por_equipos')]
+    #[Validate]
     public string $tipo = 'llano';
 
     #[Validate('required|date')]
     public string $fecha = '';
 
     // ── Tipos disponibles ─────────────────────────────────────────────
-    public array $tipos = [
-        'llano' => 'Llano',
-        'media_montana' => 'Media montaña',
-        'alta_montana' => 'Alta montaña',
-        'contrarreloj' => 'Contrarreloj',
-        'contrarreloj_por_equipos' => 'CRE por equipos',
-    ];
+    public array $tipos = [];
 
     // ── Ciclo de vida ────────────────────────────────────────────────
     public function mount(Prueba $prueba): void
     {
         $this->prueba_id = $prueba->id;
         $this->pruebaNombre = $prueba->nombre;
+        $this->tipos = TipoEtapa::options();
+    }
+
+    protected function rules(): array
+    {
+        return [
+            'tipo' => ['required', Rule::enum(TipoEtapa::class)],
+        ];
     }
 
     // ── Acciones ─────────────────────────────────────────────────────
@@ -103,7 +107,7 @@ class Etapas extends Component
         $this->salida = $etapa->salida ?? '';
         $this->llegada = $etapa->llegada ?? '';
         $this->distancia_km = $etapa->distancia_km;
-        $this->tipo = $etapa->tipo;
+        $this->tipo = $etapa->tipo->value;
         $this->fecha = Carbon::parse($etapa->fecha)->format('Y-m-d');
 
         $this->resetValidation();

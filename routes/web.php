@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PanelAdmin;
 use App\Http\Controllers\Public\CiclistaPublicaController;
 use App\Http\Controllers\Public\ClasificacionController;
 use App\Http\Controllers\Public\EquipoPublicaController;
@@ -7,7 +8,7 @@ use App\Http\Controllers\Public\PruebaPublicaController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::view('dashboard', 'dashboard')->name('dashboard');
+    Route::get('dashboard', PanelAdmin::class)->name('dashboard');
     Route::livewire('/equipos', 'pages.equipos')->name('equipos');
     Route::livewire('/ciclistas', 'pages.ciclistas')->name('ciclistas');
     Route::livewire('/pruebas', 'pages.pruebas')->name('pruebas');

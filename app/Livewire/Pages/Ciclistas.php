@@ -20,6 +20,7 @@ class Ciclistas extends Component
     public bool $showModal = false;
     public ?int $editingId = null;
     public string $search = '';
+    public string $buscar_equipo = '';
 
     // ── Campos del formulario ────────────────────────────────────────
     #[Validate('required|string|max:255')]
@@ -43,14 +44,17 @@ class Ciclistas extends Component
         $this->resetPage();
     }
 
+    public function updatingBuscarEquipo(): void
+    {
+        $this->resetPage();
+    }
+
     // ── Computed ─────────────────────────────────────────────────────
-    #[Computed(cache: true)]
-    public function equipos(): array
+    #[Computed]
+    public function equipos()
     {
         return Equipo::orderBy('nombre')
-            ->get(['id', 'nombre'])
-            ->map(fn ($e) => ['value' => $e->id, 'label' => $e->nombre])
-            ->toArray();
+            ->get();
     }
 
     // ── Acciones ─────────────────────────────────────────────────────
@@ -127,6 +131,10 @@ class Ciclistas extends Component
                 ->orWhere('apellidos', 'like', "%{$this->search}%")
                 ->orWhereHas('equipo', fn ($q) => $q->where('nombre', 'like', "%{$this->search}%"))
             )
+            ->when($this->buscar_equipo !== '', fn ($q) => $q->whereHas(
+                'equipo',
+                fn ($eq) => $eq->where('nombre', 'like', "%{$this->buscar_equipo}%")
+            ))
             ->orderBy('apellidos')
             ->orderBy('nombre')
             ->paginate(15);
